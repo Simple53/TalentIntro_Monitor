@@ -43,7 +43,8 @@ def notify_user(new_items):
     title = f"【人才引进网】发现 {count} 条新招聘 ({today_str})"
     
     content = f"日期: {today_str}\n"
-    content += f"关键词: {config.KEYWORDS}\n\n"
+    content += f"关键词: {config.KEYWORDS}\n"
+    content += f"排除关键词: {config.EXCLUDE_KEYWORDS}\n\n"
     content += f"发现以下 {count} 条相关招聘:\n"
     
     html_list = ""
@@ -64,6 +65,7 @@ def notify_user(new_items):
         <h3>{title}</h3>
         <p>日期: {today_str}</p>
         <p>关键词: {config.KEYWORDS}</p>
+        <p>排除关键词: {config.EXCLUDE_KEYWORDS}</p>
         <hr>
         <ul>
             {html_list}
@@ -163,6 +165,11 @@ def run_scraper():
                 
                 # 关键词过滤
                 if any(kw in title for kw in config.KEYWORDS):
+                    # 排除关键词过滤
+                    if any(exclude_kw in title for exclude_kw in config.EXCLUDE_KEYWORDS):
+                        print(f"  [排除] 包含排除关键词: {title}")
+                        continue
+                    
                     # 检查是否历史已记录
                     unique_id = f"{date_str}_{title}"
                     if unique_id in history_set:
