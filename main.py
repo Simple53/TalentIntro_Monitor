@@ -149,6 +149,9 @@ def run_scraper():
                 date_str = em.get_text(strip=True)
                 title = a_tag.get_text(strip=True)
                 link = a_tag.get('href')
+                # 将相对链接转换为完整URL
+                if link and not link.startswith('http'):
+                    link = urljoin(current_url, link)
                 
                 try:
                     item_date = datetime.strptime(date_str, "%Y-%m-%d").date()
