@@ -36,21 +36,26 @@ def notify_user(new_items):
     today_str = datetime.now().strftime("%Y-%m-%d")
     count = len(new_items)
     
+    # 构建标题和内容
     if count == 0:
-        print(">>> 无新增内容，跳过通知。")
-        return
-
-    title = f"【人才引进网】发现 {count} 条新招聘 ({today_str})"
-    
-    content = f"日期: {today_str}\n"
-    content += f"关键词: {config.KEYWORDS}\n"
-    content += f"排除关键词: {config.EXCLUDE_KEYWORDS}\n\n"
-    content += f"发现以下 {count} 条相关招聘:\n"
-    
-    html_list = ""
-    for item in new_items:
-        content += f"- [{item['date']}] {item['title']}\n  链接: {item['link']}\n"
-        html_list += f"<li><span style='color:#666'>[{item['date']}]</span> <a href='{item['link']}'>{item['title']}</a></li>"
+        title = f"【人才引进网】今日无新增 ({today_str})"
+        content = f"日期: {today_str}\n"
+        content += f"关键词: {config.KEYWORDS}\n"
+        content += f"排除关键词: {config.EXCLUDE_KEYWORDS}\n\n"
+        content += f"程序运行正常。\n"
+        content += f"在过去{config.LOOKBACK_DAYS}天的范围内，未发现符合条件的新招聘公告。\n"
+        html_list = "<li style='color:#999;'>暂无新增招聘信息</li>"
+    else:
+        title = f"【人才引进网】发现 {count} 条新招聘 ({today_str})"
+        content = f"日期: {today_str}\n"
+        content += f"关键词: {config.KEYWORDS}\n"
+        content += f"排除关键词: {config.EXCLUDE_KEYWORDS}\n\n"
+        content += f"发现以下 {count} 条相关招聘:\n"
+        
+        html_list = ""
+        for item in new_items:
+            content += f"- [{item['date']}] {item['title']}\n  链接: {item['link']}\n"
+            html_list += f"<li><span style='color:#666'>[{item['date']}]</span> <a href='{item['link']}'>{item['title']}</a></li>"
     
     print(f">>> 准备发送通知: {title}")
     
@@ -87,6 +92,7 @@ def notify_user(new_items):
             print(">>> 邮件发送成功")
         except Exception as e:
             print(f"邮件发送失败: {e}")
+
 
 def run_scraper():
     print("=" * 40)
