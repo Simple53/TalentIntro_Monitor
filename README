@@ -1,0 +1,20 @@
+# 1. 进入项目目录
+cd g:\onedrive\smallprjs\爬虫\南京市人社厅\NJHRSS_Monitor
+
+# 2. 初始化 Git 仓库（如果还没初始化）
+git init
+
+# 3. 添加所有文件到暂存区
+git add .
+
+# 4. 提交更改
+git commit -m "Update"
+
+# 5. 设置主分支名称为 main
+git branch -M main
+
+# 6. 添加远程仓库（替换为您的 GitHub 仓库地址）
+git remote add origin https://github.com/Simple53/TalentIntro_Monitor.git
+
+# 7. 推送到 GitHub
+git push -u origin main
