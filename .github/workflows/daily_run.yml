@@ -2,7 +2,7 @@ name: 每日人才引进招聘监控
 
 on:
   schedule:
-    - cron: '0 -1 * * *' # 每天北京时间 9:00 (UTC 1:00) 运行
+    - cron: '0 23 * * *' # 每天北京时间 9:00 (UTC 1:00) 运行
   workflow_dispatch:
 
 permissions:
