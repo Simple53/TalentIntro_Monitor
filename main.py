@@ -7,7 +7,7 @@ import time
 import smtplib
 from email.mime.text import MIMEText
 from email.header import Header
-from email.utils import formataddr
+from email.utils import formataddr, formatdate, make_msgid
 from urllib.parse import urljoin
 
 import config
@@ -80,6 +80,8 @@ def notify_user(new_items):
         """
         
         msg = MIMEText(html_content, 'html', 'utf-8')
+        msg['Date'] = formatdate(localtime=True) 
+        msg['Message-ID'] = make_msgid()
         msg['Subject'] = Header(title, 'utf-8')
         msg['From'] = formataddr(["人才引进网助手", config.SENDER_EMAIL])
         msg['To'] = formataddr(["用户", config.RECEIVER_EMAIL])
