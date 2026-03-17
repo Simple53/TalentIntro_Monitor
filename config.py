@@ -11,9 +11,6 @@ EXCLUDE_KEYWORDS = ['编外', '派遣', '实习']
 # 目标网址 (人才引进网 - 事业单位招聘)
 BASE_URL = "https://rcyjw.com/type_0.html"
 
-# CF 反向代理地址 (解决 Github Action 海外 IP 被墙问题)
-CF_PROXY_URL = "https://rcyjw-proxy.1198030157.workers.dev/?url="
-
 # 文件/数据保存目录
 SAVE_DIR = "招聘公告"
 
