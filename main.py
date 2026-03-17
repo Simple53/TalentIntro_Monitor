@@ -154,7 +154,12 @@ def run_scraper():
         print(f"\n--- 第 {page_num} 页 ---\n    URL: {current_url}")
         
         try:
-            res = session.get(current_url, timeout=30, verify=False)
+            # 组装代理网址
+            request_url = current_url
+            if hasattr(config, 'CF_PROXY_URL') and config.CF_PROXY_URL:
+                request_url = f"{config.CF_PROXY_URL}{current_url}"
+                
+            res = session.get(request_url, timeout=30, verify=False)
             if res.status_code == 404:
                 break
             res.encoding = 'utf-8'
