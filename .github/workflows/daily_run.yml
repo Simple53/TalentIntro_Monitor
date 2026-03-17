@@ -24,6 +24,16 @@ jobs:
     - name: 安装依赖库
       run: |
         pip install -r requirements.txt
+    - name: 测试目标网站连通性
+      run: |
+        echo "==== Testing basic DNS and Ping ===="
+        ping -c 4 rcyjw.com || true
+        
+        echo "==== Testing curl connection ===="
+        curl -v -4 --connect-timeout 10 https://rcyjw.com/type_0.html || true
+        
+        echo "==== Testing Python simple request ===="
+        python -c "import requests; print('Python requests test:', requests.get('https://rcyjw.com/type_0.html', timeout=10, verify=False).status_code)" || true
 
     - name: 运行爬虫脚本
       env: 

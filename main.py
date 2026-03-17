@@ -1,6 +1,11 @@
 import requests
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
+from urllib3.exceptions import InsecureRequestWarning
+import warnings
+
+# 禁用由于 verify=False 带来的 SSL 警告
+warnings.simplefilter('ignore', InsecureRequestWarning)
 
 from bs4 import BeautifulSoup
 import os
@@ -149,7 +154,7 @@ def run_scraper():
         print(f"\n--- 第 {page_num} 页 ---\n    URL: {current_url}")
         
         try:
-            res = session.get(current_url, timeout=15)
+            res = session.get(current_url, timeout=30, verify=False)
             if res.status_code == 404:
                 break
             res.encoding = 'utf-8'
